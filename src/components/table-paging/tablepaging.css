@@ -1,0 +1,59 @@
+.table__paging {
+  height: 48px;
+  width: 100%;
+  box-shadow: 1px -1px 40px rgba(0, 0, 0, 0.078);
+  background-color: #eeeeee;
+  display: flex;
+  justify-content: space-between;
+}
+.table__paging-left {
+  margin: 20px 0px 19px 16px;
+  color: #666666;
+}
+.table_paging_right {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  column-gap: 16px;
+  font-size: 14px;
+  color: #666666;
+}
+.record-page {
+  color: #616161;
+  font-size: 14px;
+}
+.total-page {
+  width: 76px;
+  height: 36px;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  margin-left: 63px;
+  display: flex;
+  align-items: center;
+}
+.total-page-number {
+  margin: 8px 16px 8px 12px;
+  font-size: 14px;
+}
+.table_paging_right select {
+  height: 28px;
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  padding: 4px 16px 4px 12px;
+  border-radius: 4px;
+  color: #666666;
+}
+.page-number {
+  padding: 2px 6px;
+}
+.page-number-current {
+  border: 1px solid #c5c5c5;
+  font-weight: bold;
+}
+.pagination-btn {
+  padding: 0 4px;
+}
+.pagination-btn--disabled {
+  opacity: 0.5;
+}

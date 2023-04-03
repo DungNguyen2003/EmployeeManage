@@ -1,0 +1,15 @@
+#menu {
+  background-color: #041434;
+  width: 200px;
+  color: #fff;
+  height: 100vh;
+  float: left;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+}
+@media only screen and (max-width: 768px) {
+  #menu {
+    display: none;
+  }
+}

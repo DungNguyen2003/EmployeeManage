@@ -1,4 +1,7 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import MInput from "./components/base/MInput.vue";
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.component("MInput", MInput);
+app.mount("#app");

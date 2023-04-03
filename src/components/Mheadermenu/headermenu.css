@@ -1,0 +1,17 @@
+.menu__header {
+  /* height: 56px; */
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ccc;
+}
+.menu-icon-img {
+  height: 24px;
+  width: 24px;
+  margin: 0 8px;
+}
+.menu__header-logo {
+  width: 95px;
+  margin: 0 8px;
+}
