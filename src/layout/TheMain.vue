@@ -37,11 +37,7 @@
               <TableHeader></TableHeader>
             </thead>
             <tbody>
-              <tr
-                @dblclick="($event) => rowOnDbClick(item)"
-                v-for="(item, index) in employees"
-                :key="index"
-              >
+              <tr v-for="(item, index) in employees" :key="index">
                 <td class="check-column"><input type="checkbox" /></td>
                 <td>{{ item.employeeName }}</td>
                 <td>{{ item.employeeCode }}</td>
@@ -50,7 +46,8 @@
                 <td>{{ item.employeePeopleId }}</td>
                 <td>{{ item.employeePosition }}</td>
                 <td>{{ item.departmentName }}</td>
-                <td></td>
+                <td>{{ item.employeeMobilePhoneNumber }}</td>
+                <td>{{ item.employeeBankNumber }}</td>
                 <td></td>
                 <td class="feature-column">
                   <div class="feature-column__container">
@@ -65,9 +62,18 @@
                       class="feature-fix-options"
                       v-show="showFixOptions[index]"
                     >
-                      <div class="fix-option">Nhân bản</div>
-                      <div class="fix-option">Xóa</div>
-                      <div class="fix-option">Ngừng sử dụng</div>
+                      <div
+                        class="fix-option"
+                        @click="($event) => employeeDuplicate(item)"
+                      >
+                        Nhân bản
+                      </div>
+                      <div
+                        class="fix-option"
+                        @click="($event) => deleteEmployee(item.employeeId)"
+                      >
+                        Xóa
+                      </div>
                     </div>
                   </div>
                 </td>
@@ -107,7 +113,7 @@ export default {
       });
   },
   methods: {
-    rowOnDbClick(employee) {
+    employeeDuplicate(employee) {
       this.isShowPopup = true;
       this.employeeIdSelected = employee.EmployeeId;
       this.empSelected = employee;
@@ -116,6 +122,7 @@ export default {
     },
     btnAddEmployee() {
       this.isShowPopup = true;
+      this.empSelected = {};
     },
     onCloseFormDetail() {
       this.isShowPopup = false;
@@ -157,6 +164,29 @@ export default {
         this.showFixOptions[index] = true;
         this.showFixOptionIndex = index;
       }
+    },
+    /**
+     * delete an employee
+     * Param id of employee
+     * Author: Dungnguyen(03/04/2023)
+     */
+    deleteEmployee(id) {
+      alert("Bạn có chắc chắn muốn xóa không");
+      fetch(`https://localhost:7082/api/Employees/${id}`, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.text())
+        .then((data) => {
+          console.log(data);
+          alert("Xóa thành công, reload lại trang để hiển thị kết quả mới");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Xóa không thành công, có lỗi xảy ra");
+        });
     },
   },
   data() {

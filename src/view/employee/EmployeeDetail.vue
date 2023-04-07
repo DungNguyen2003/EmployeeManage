@@ -22,22 +22,9 @@
       <div class="popup__body-top">
         <div class="popup__body-left">
           <div class="m-row m-flex m-col-gap-8">
-            <!-- <div class="input-wrapper">
-              <label for="employeeCode"
-                ><span>Mã NV </span><span class="required">*</span></label
-              >
-              <input
-                type="text"
-                name=""
-                id="employeeCode"
-                class="input--required"
-                placeholder="Mã NV"
-                v-model="employeeCode"
-              />
-            </div> -->
             <m-input
               label="Mã NV"
-              v-model="employeeCode"
+              v-model="employee.employeeCode"
               :required="true"
               placeholder="Nhập mã nhân viên"
             ></m-input>
@@ -56,7 +43,7 @@
             </div> -->
               <m-input
                 label="Họ tên"
-                v-model="employeeName"
+                v-model="employee.employeeName"
                 :required="true"
                 placeholder="Nhập họ và tên "
               ></m-input>
@@ -65,17 +52,17 @@
           <div class="m-row m-flex m-col-gap-8">
             <div class="input-wrapper input-wrapper--full-width">
               <label for="employeePosition"
-                ><span>Đơn vị </span> <span class="required">*</span></label
+                ><span>Mã phòng ban</span>
+                <span class="required">*</span></label
               >
-              <select
-                v-model="departmentName"
+              <input
+                type="text"
                 name=""
-                id="popup__select__position"
-              >
-                <option value="Phòng nhân sự">Phòng nhân sự</option>
-                <option value="Phòng kỹ thuật">Phòng kỹ thuật</option>
-                <option value="Phòng kinh doanh">Phòng kinh doanh</option>
-              </select>
+                id="employeeRole"
+                class=""
+                placeholder="Phòng ban"
+                v-model="employee.departmentCode"
+              />
             </div>
           </div>
           <div class="m-row m-flex m-col-gap-8">
@@ -87,7 +74,7 @@
                 id="employeeRole"
                 class=""
                 placeholder="Chức danh làm việc"
-                v-model="employeePosition"
+                v-model="employee.employeePosition"
               />
             </div>
           </div>
@@ -103,7 +90,7 @@
                 name=""
                 id="employeeBirthday"
                 class="input--required"
-                v-model="employeeBirthday"
+                v-model="employee.employeeBirthday"
               />
             </div>
             <div class="input-wrapper">
@@ -117,7 +104,7 @@
                     name="gender"
                     id="genderEmployeeCode"
                     value="1"
-                    v-model="employeeGender"
+                    v-model="employee.employeeGender"
                   />Nam
                 </div>
                 <div class="check-gender-wrap">
@@ -126,7 +113,7 @@
                     name="gender"
                     id="genderEmployeeCode"
                     value="0"
-                    v-model="employeeGender"
+                    v-model="employee.employeeGender"
                   />Nữ
                 </div>
                 <div class="check-gender-wrap">
@@ -135,7 +122,7 @@
                     name="gender"
                     id="genderEmployeeCode"
                     value="Khác"
-                    v-model="employeeGender"
+                    v-model="employee.employeeGender"
                   />Khác
                 </div>
               </form>
@@ -151,7 +138,7 @@
                 id="employeePeopleId"
                 class="input--required"
                 placeholder="Số căn cước công dân"
-                v-model="employeePeopleId"
+                v-model="employee.employeePeopleId"
               />
             </div>
             <div class="input-wrapper">
@@ -159,11 +146,11 @@
                 ><span>Ngày cấp </span> <span class="required">*</span></label
               >
               <input
-                type="datetime"
+                type="date"
                 name=""
                 id="employeePeopleIdDate"
                 class="input--required"
-                v-model="employeePeopleIdDate"
+                v-model="employee.employeePeopleIdDate"
               />
             </div>
           </div>
@@ -177,7 +164,7 @@
                 id="employeePeopleIdLocation"
                 class="input--required"
                 placeholder="Nơi cấp căn cước công dân"
-                v-model="employeePeopleIdLocation"
+                v-model="employee.employeePeopleIdLocation"
               />
             </div>
           </div>
@@ -210,7 +197,7 @@
               id="employeeMobilePhoneNumber"
               class="input--required"
               placeholder="Số điện thoại"
-              v-model="employeeMobilePhoneNumber"
+              v-model="employee.employeeMobilePhoneNumber"
             />
           </div>
           <div class="input-wrapper input-wrapper--full-width">
@@ -235,7 +222,7 @@
               id="employeeEmail"
               class="input--required"
               placeholder="example@gmail.com"
-              v-model="employeeEmail"
+              v-model="employee.employeeEmail"
             />
           </div>
         </div>
@@ -251,7 +238,7 @@
               id="employeeBankNumber"
               class="input--required"
               placeholder="Số TK ngân hàng"
-              v-model="employeeBankNumber"
+              v-model="employee.employeeBankNumber"
             />
           </div>
           <div class="input-wrapper input-wrapper--full-width">
@@ -307,17 +294,16 @@ export default {
     // Chuyển dữ liệu từ props sang data:
     this.employee = this.employeeInput;
 
-    // Lấy data về:
+    // Lấy data về:(da lay du lieu bang cach call api 1 lan duy nhat)
     if (this.employeeId) {
-      fetch(
-        `https://apidemo.laptrinhweb.edu.vn/api/v1/Employees/${this.employeeId}`
-      )
+      fetch(`https://localhost:7082/api/Employees//${this.employeeId}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
           this.employee = data;
         });
     }
+    console.log(this.employee);
   },
   methods: {
     btnCloseOnClick() {
@@ -337,6 +323,21 @@ export default {
      * Author: DungNguyen(02/03/2023)
      */
     onCloseFormDetail() {
+      this.employee = {
+        employeeCode: "",
+        employeeName: "",
+        employeeBirthday: "",
+        employeeGender: "",
+        employeePosition: "",
+        employeePeopleId: "",
+        employeePeopleIdDate: "",
+        employeePeopleIdLocation: "",
+        departmentCode: "",
+        employeeMobilePhoneNumber: "",
+        employeeEmail: "",
+        employeeBankNumber: "",
+      };
+
       this.$emit("hideMe");
     },
     /**
@@ -350,44 +351,52 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          employeeCode: this.employeeCode,
-          employeeName: this.employeeName,
-          employeeGender: this.genderEmployeeCode,
-          employeeBirthday: this.employeeBirthday,
-          employeePosition: this.employeePosition,
-          employeePeopleId: this.employeePeopleId,
-          employeePeopleIdLocation: this.employeePeopleIdLocation,
-          employeeMobilePhoneNumber: this.employeeMobilePhoneNumber,
-          employeeEmail: this.employeeEmail,
-          employeeBankNumber: this.employeeBankNumber,
+          employeeCode: this.employee.employeeCode,
+          employeeName: this.employee.employeeName,
+          departmentCode: this.employee.departmentCode,
+          employeeGender: this.employee.employeeGender,
+          employeeBirthday: this.employee.employeeBirthday,
+          employeePosition: this.employee.employeePosition,
+          employeePeopleId: this.employee.employeePeopleId,
+          employeePeopleIdLocation: this.employee.employeePeopleIdLocation,
+          employeeMobilePhoneNumber: this.employee.employeeMobilePhoneNumber,
+          employeeEmail: this.employee.employeeEmail,
+          employeeBankNumber: this.employee.employeeBankNumber,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          this.employees = data;
+          console.log(this.employee);
+          console.log(data);
+
+          alert(
+            "Thêm nhân viên thành công, vui lòng reload lại trang để hiển thị kết quả mới"
+          );
+          this.$emit("hideMe");
         })
         .catch((error) => {
           console.log(error);
-          console.log(this.employeeBirthday);
+          alert("Có lỗi xảy ra");
         });
     },
   },
   data() {
     return {
-      employeeCode: "",
-      employeeName: "",
-      employeeBirthday: "",
-      employeeGender: "",
-      employeePosition: "",
-      employeePeopleId: "",
-      employeePeopleIdDate: "",
-      employeePeopleIdLocation: "",
-      departmentName: "",
-      employeeMobilePhoneNumber: "",
-      employeeEmail: "",
-      employeeBankNumber: "",
       employees: [],
-      employee: {},
+      employee: {
+        employeeCode: "",
+        employeeName: "",
+        employeeBirthday: "",
+        employeeGender: "",
+        employeePosition: "",
+        employeePeopleId: "",
+        employeePeopleIdDate: "",
+        employeePeopleIdLocation: "",
+        departmentCode: "",
+        employeeMobilePhoneNumber: "",
+        employeeEmail: "",
+        employeeBankNumber: "",
+      },
       dataOld: null,
     };
   },
