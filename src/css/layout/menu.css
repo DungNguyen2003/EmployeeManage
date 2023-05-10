@@ -1,15 +1,15 @@
 #menu {
-  background-color: #041434;
+  /* background-color: #041434; */
   width: 200px;
   color: #fff;
-  height: 100vh;
+  height: calc(100vh - 56px);
   float: left;
-  padding: 16px 12px;
+  /* padding: 16px 12px; */
   display: flex;
   flex-direction: column;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1200px) {
   #menu {
-    display: none;
+    width: 65px;
   }
 }

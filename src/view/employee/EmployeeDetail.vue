@@ -303,7 +303,6 @@ export default {
           this.employee = data;
         });
     }
-    console.log(this.employee);
   },
   methods: {
     btnCloseOnClick() {
@@ -345,39 +344,47 @@ export default {
      * Author: Dungnguyen (02/03/2023)
      */
     addEmployee() {
-      fetch("https://localhost:7082/api/Employees/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          employeeCode: this.employee.employeeCode,
-          employeeName: this.employee.employeeName,
-          departmentCode: this.employee.departmentCode,
-          employeeGender: this.employee.employeeGender,
-          employeeBirthday: this.employee.employeeBirthday,
-          employeePosition: this.employee.employeePosition,
-          employeePeopleId: this.employee.employeePeopleId,
-          employeePeopleIdLocation: this.employee.employeePeopleIdLocation,
-          employeeMobilePhoneNumber: this.employee.employeeMobilePhoneNumber,
-          employeeEmail: this.employee.employeeEmail,
-          employeeBankNumber: this.employee.employeeBankNumber,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(this.employee);
-          console.log(data);
-
-          alert(
-            "Thêm nhân viên thành công, vui lòng reload lại trang để hiển thị kết quả mới"
-          );
-          this.$emit("hideMe");
+      try {
+        fetch("https://localhost:7082/api/Employees/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            employeeCode: this.employee.employeeCode,
+            employeeName: this.employee.employeeName,
+            departmentCode: this.employee.departmentCode,
+            employeeGender: this.employee.employeeGender,
+            employeeBirthday: this.employee.employeeBirthday,
+            employeePosition: this.employee.employeePosition,
+            employeePeopleId: this.employee.employeePeopleId,
+            employeePeopleIdLocation: this.employee.employeePeopleIdLocation,
+            employeeMobilePhoneNumber: this.employee.employeeMobilePhoneNumber,
+            employeeEmail: this.employee.employeeEmail,
+            employeeBankNumber: this.employee.employeeBankNumber,
+          }),
         })
-        .catch((error) => {
-          console.log(error);
-          alert("Có lỗi xảy ra");
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(this.employee);
+            console.log(data);
+            if (data.status == 400) {
+              alert("Thêm nhân viên thất bại!!!");
+            } else {
+              alert(
+                "Thêm nhân viên thành công, vui lòng reload lại trang để hiển thị kết quả mới"
+              );
+            }
+
+            this.$emit("hideMe");
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("Có lỗi xảy ra");
+          });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   data() {

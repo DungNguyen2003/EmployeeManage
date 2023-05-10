@@ -1,0 +1,23 @@
+.employee-code-column {
+  min-width: 60px;
+}
+.name-column {
+  min-width: 150px;
+}
+.gender-column {
+  min-width: 74px;
+}
+.birthday-column {
+  min-width: 80px;
+}
+.people-id-column,
+.job-position-column,
+.group-name-column,
+.phone-number-column,
+.number-bank-account-column,
+.feature-column {
+  min-width: 100px;
+}
+.bank-name-column {
+  min-width: 115px;
+}

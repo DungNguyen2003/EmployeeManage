@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <TheMenu></TheMenu>
     <TheHeader></TheHeader>
+    <TheMenu></TheMenu>
     <TheMain></TheMain>
   </div>
 </template>

@@ -5,8 +5,8 @@
     :key="index"
   >
     <td class="check-column"><input type="checkbox" /></td>
-    <td>{{ item.FullName }}</td>
     <td>{{ item.EmployeeCode }}</td>
+    <td>{{ item.FullName }}</td>
     <td>{{ item.employeeGender }}</td>
     <td>{{ formatDate(item.DateOfBirth) }}</td>
     <td>{{ item.employeePeopleId }}</td>

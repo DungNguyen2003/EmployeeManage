@@ -39,7 +39,6 @@ export default {
 
   watch: {
     value: function (newValue) {
-      console.log(newValue);
       this.$emit("update:modelValue", newValue);
     },
   },

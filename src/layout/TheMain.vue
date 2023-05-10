@@ -22,6 +22,7 @@
               type="text"
               class="table__input-search"
               placeholder="Tìm kiếm trong danh sách"
+              v-model="searchQuery"
               checked
             />
             <img
@@ -37,10 +38,10 @@
               <TableHeader></TableHeader>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in employees" :key="index">
+              <tr v-for="(item, index) in searchEmployees" :key="index">
                 <td class="check-column"><input type="checkbox" /></td>
-                <td>{{ item.employeeName }}</td>
                 <td>{{ item.employeeCode }}</td>
+                <td>{{ item.employeeName }}</td>
                 <td>{{ item.employeeGender == 1 ? "Nam" : "Nữ" }}</td>
                 <td>{{ formatDate(item.employeeBirthday) }}</td>
                 <td>{{ item.employeePeopleId }}</td>
@@ -109,17 +110,23 @@ export default {
       .then((res) => res.json())
       .then((data) => {
         this.employees = data;
-        console.log(data);
       });
   },
   methods: {
+    /**
+     * Duplicate an employee
+     * param: an employee
+     * author: DungNguyen(1/4/2023)
+     */
     employeeDuplicate(employee) {
       this.isShowPopup = true;
       this.employeeIdSelected = employee.EmployeeId;
       this.empSelected = employee;
-      console.log(this.employeeIdSelected);
-      console.log(employee);
     },
+    /**
+     * Show popup
+     * Author: DungNguyen
+     */
     btnAddEmployee() {
       this.isShowPopup = true;
       this.empSelected = {};
@@ -128,6 +135,7 @@ export default {
       this.isShowPopup = false;
     },
     /**Format ngày tháng
+     * Param: date
      Author:DungNguyen */
     formatDate(date) {
       try {
@@ -171,7 +179,7 @@ export default {
      * Author: Dungnguyen(03/04/2023)
      */
     deleteEmployee(id) {
-      alert("Bạn có chắc chắn muốn xóa không");
+      alert("Ấn OK để xóa");
       fetch(`https://localhost:7082/api/Employees/${id}`, {
         method: "DELETE",
         headers: {
@@ -189,6 +197,18 @@ export default {
         });
     },
   },
+  computed: {
+    searchEmployees() {
+      const query = this.searchQuery.toLowerCase();
+      return this.employees.filter((employee) => {
+        let employeeCode = employee.employeeCode || "";
+        let employeeName = employee.employeeName || "";
+        employeeCode = employeeCode.toLowerCase();
+        employeeName = employeeName.toLowerCase();
+        return employeeCode.includes(query) || employeeName.includes(query);
+      });
+    },
+  },
   data() {
     return {
       isShowPopup: false,
@@ -198,6 +218,7 @@ export default {
       showFixOptionIndex: null, // current show option index
       employeeIdSelected: null,
       empSelected: {},
+      searchQuery: "",
     };
   },
 };
